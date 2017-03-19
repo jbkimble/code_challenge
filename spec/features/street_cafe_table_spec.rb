@@ -37,4 +37,14 @@ describe "As a visitor to '/cafes'" do
     expect(page).to have_content("2")
     expect(page).to have_content("3")
   end
+
+  scenario "It displays the total_chairs at a each post code" do
+    StreetCafe.create(name: "Lennys Cafe", address:"123 Castle Drive", postcode: "LS1 FBN", chairs_num: 20)
+    StreetCafe.create(name: "Margeries Cafe", address:"123 LeMond Drive", postcode: "LS1 FBN", chairs_num: 30)
+
+    visit '/cafes'
+    expect(page).to have_content("total_chairs")
+    expect(page).to have_content("50")
+  end
+  
 end
