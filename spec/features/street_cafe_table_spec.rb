@@ -15,4 +15,3 @@ describe "As a visitor to '/cafes'" do
   end
 
 end
-gs
