@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'rake'
 
 describe 'rake categorize_cafes' do
   scenario 'It gives the correct category to L1 cafes' do

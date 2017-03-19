@@ -4,8 +4,8 @@ class StreetCafe < ApplicationRecord
   validates :postcode, presence: true
   validates :chairs_num, presence: true
 
-  def self.unique_postcodes
-    find_by_sql("SELECT DISTINCT postcode FROM street_cafes;")
+  def self.unique_column_values(column_name)
+    find_by_sql("SELECT DISTINCT #{column_name} FROM street_cafes;")
   end
 
   def total_places
@@ -13,7 +13,7 @@ class StreetCafe < ApplicationRecord
                              WHERE postcode = '#{self.postcode}';")
   end
 
-  def total_chairs
+  def total_chairs_by_postcode
     StreetCafe.count_by_sql("SELECT SUM(chairs_num) FROM street_cafes
                              WHERE postcode = '#{self.postcode}';")
   end
@@ -37,6 +37,16 @@ class StreetCafe < ApplicationRecord
     StreetCafe.find_by_sql("SELECT chairs_num FROM street_cafes
                             WHERE postcode = '#{self.postcode}'
                             ORDER BY chairs_num DESC LIMIT 1;").first.chairs_num
+  end
+
+  def total_cafes_in_category
+    StreetCafe.count_by_sql("SELECT COUNT(id) FROM street_cafes
+                             WHERE category = '#{self.category}';")
+  end
+
+  def total_chairs_by_category
+    StreetCafe.count_by_sql("SELECT SUM(chairs_num) FROM street_cafes
+                             WHERE category = '#{self.category}';")
   end
 
 end
