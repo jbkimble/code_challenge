@@ -1,0 +1,16 @@
+<h1>Category Information Table</h1>
+
+<table>
+  <tr>
+    <th>Category</th>
+    <th>total_places</th>
+    <th>total_chairs</th>
+  </tr>
+
+  <% @categories.each do |category| %>
+    <tr>
+      <td> <%= category.category %> </td>
+      <td> <%= category.total_cafes_in_category %> </td>
+    </tr>
+  <% end %>
+</table>
