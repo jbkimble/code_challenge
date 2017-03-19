@@ -10,4 +10,9 @@
     <th>max_chairs</th>
   </tr>
 
+  <% @postcodes.each do |postcode| %>
+    <tr>
+      <td> <%= postcode.postcode %> </td>
+    </tr>
+  <% end %>
 </table>
