@@ -33,7 +33,7 @@ describe "As a visitor to '/cafes'" do
     StreetCafe.create(name: "Mary's Egg Nest", address:"123 Banana Park", postcode: "LS2 TRH", chairs_num: 30)
 
     visit '/cafes'
-    expect(page).to have_content("total_places")
+
     expect(page).to have_content("2")
     expect(page).to have_content("3")
   end
@@ -43,7 +43,7 @@ describe "As a visitor to '/cafes'" do
     StreetCafe.create(name: "Margeries Cafe", address:"123 LeMond Drive", postcode: "LS1 FBN", chairs_num: 30)
 
     visit '/cafes'
-    expect(page).to have_content("total_chairs")
+
     expect(page).to have_content("50")
   end
 
@@ -54,8 +54,20 @@ describe "As a visitor to '/cafes'" do
     StreetCafe.create(name: "Margeries Cafe", address:"123 LeMond Drive", postcode: "LS2 TTT", chairs_num: 30)
 
     visit '/cafes'
-    expect(page).to have_content("chairs_pct")
+
     expect(page).to have_content("60.0%")
     expect(page).to have_content("40.0%")
+  end
+
+  scenario "It displays the name of the cafe with the most chairs for each postcode" do
+    StreetCafe.create(name: "Lennys Cafe", address:"123 Castle Drive", postcode: "LS1 FBN", chairs_num: 30)
+    StreetCafe.create(name: "Margeries Cafe", address:"123 LeMond Drive", postcode: "LS1 FBN", chairs_num: 20)
+    StreetCafe.create(name: "Franciscas Cafe", address:"123 Coconut Lane", postcode: "LS2 FTT", chairs_num: 70)
+
+    visit '/cafes'
+
+    expect(page).to have_content("Lennys Cafe")
+    expect(page).to_not have_content("Margeries Cafe")
+    expect(page).to have_content("Franciscas Cafe")
   end
 end
