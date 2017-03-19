@@ -21,9 +21,16 @@ class StreetCafe < ApplicationRecord
   def percentage_of_all_chairs_at_postcode
     # Beloq code returns '0' something to do with both individual queries returning integers instead of floats
     percentage = StreetCafe.count_by_sql("SELECT SUM(chairs_num) FROM street_cafes
-                                        WHERE postcode = '#{self.postcode}';").to_f /
+                                          WHERE postcode = '#{self.postcode}';").to_f /
                  StreetCafe.count_by_sql("SELECT SUM(chairs_num) FROM street_cafes;").to_f
 
     (percentage * 100.0).round(2)
   end
+
+  def place_with_max_chairs
+    StreetCafe.find_by_sql("SELECT name FROM street_cafes
+                            WHERE postcode = '#{self.postcode}'
+                            ORDER BY chairs_num DESC LIMIT 1;").first.name
+  end
+  
 end
