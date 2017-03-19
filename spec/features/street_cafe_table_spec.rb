@@ -46,5 +46,16 @@ describe "As a visitor to '/cafes'" do
     expect(page).to have_content("total_chairs")
     expect(page).to have_content("50")
   end
-  
+
+  scenario "It displays the percentage of total chairs at a each post code" do
+    StreetCafe.create(name: "Lennys Cafe", address:"123 Castle Drive", postcode: "LS1 FBN", chairs_num: 30)
+    StreetCafe.create(name: "Margeries Cafe", address:"123 LeMond Drive", postcode: "LS1 FBN", chairs_num: 30)
+    StreetCafe.create(name: "Lennys Cafe", address:"123 Castle Drive", postcode: "LS2 TTT", chairs_num: 10)
+    StreetCafe.create(name: "Margeries Cafe", address:"123 LeMond Drive", postcode: "LS2 TTT", chairs_num: 30)
+
+    visit '/cafes'
+    expect(page).to have_content("chairs_pct")
+    expect(page).to have_content("60.0%")
+    expect(page).to have_content("40.0%")
+  end
 end
