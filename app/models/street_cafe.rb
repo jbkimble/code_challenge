@@ -12,4 +12,9 @@ class StreetCafe < ApplicationRecord
     StreetCafe.count_by_sql("SELECT COUNT(id) FROM street_cafes
                              WHERE postcode = '#{self.postcode}'")
   end
+
+  def total_chairs
+    StreetCafe.count_by_sql("SELECT SUM(chairs_num) FROM street_cafes
+                             WHERE postcode = '#{self.postcode}'")
+  end
 end
