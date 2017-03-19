@@ -113,9 +113,14 @@ describe StreetCafe do
 
     context ".total_chairs_by_category" do
       it "returns total chairs for a category" do
+        cafe = StreetCafe.create(name: "Lennys Cafe", address:"123 Castle Drive", postcode: "LS1 FBN", chairs_num: 20, category: "ls1 medium")
+        StreetCafe.create(name: "Margeries Cafe", address:"123 LeMond Drive", postcode: "LS1 FBN", chairs_num: 30, category: "ls1 medium")
+        StreetCafe.create(name: "Tammy's Egg Nest", address:"123 LeMond Drive", postcode: "LS1 TRH", chairs_num: 9, category: "ls1 small")
+
+        chairs_count = cafe.total_chairs_by_category
+        expect(chairs_count).to eq(50)
       end
     end
   end
-
 
 end
