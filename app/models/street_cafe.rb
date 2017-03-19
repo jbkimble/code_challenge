@@ -7,4 +7,9 @@ class StreetCafe < ApplicationRecord
   def self.unique_postcodes
     find_by_sql("SELECT DISTINCT postcode FROM street_cafes")
   end
+
+  def total_places
+    StreetCafe.count_by_sql("SELECT COUNT(id) FROM street_cafes
+                             WHERE postcode = '#{self.postcode}'")
+  end
 end
