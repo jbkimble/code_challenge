@@ -70,4 +70,17 @@ describe "As a visitor to '/cafes'" do
     expect(page).to_not have_content("Margeries Cafe")
     expect(page).to have_content("Franciscas Cafe")
   end
+
+  scenario "It displays the number of chairs at the cafe with the most chairs in this postcode" do
+    StreetCafe.create(name: "Lennys Cafe", address:"123 Castle Drive", postcode: "LS1 FBN", chairs_num: 30)
+    StreetCafe.create(name: "Margeries Cafe", address:"123 LeMond Drive", postcode: "LS1 FBN", chairs_num: 20)
+    StreetCafe.create(name: "Franciscas Cafe", address:"123 Coconut Lane", postcode: "LS2 FTT", chairs_num: 70)
+
+    visit '/cafes'
+
+    expect(page).to have_content("max_chairs")
+    expect(page).to have_content("Lennys Cafe")
+    expect(page).to have_content("30")
+    expect(page).to_not have_content("20")
+  end
 end
