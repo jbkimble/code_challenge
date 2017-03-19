@@ -27,10 +27,16 @@ class StreetCafe < ApplicationRecord
     (percentage * 100.0).round(2)
   end
 
-  def place_with_max_chairs
+  def cafe_with_max_chairs
     StreetCafe.find_by_sql("SELECT name FROM street_cafes
                             WHERE postcode = '#{self.postcode}'
                             ORDER BY chairs_num DESC LIMIT 1;").first.name
   end
-  
+
+  def max_chairs
+    StreetCafe.find_by_sql("SELECT chairs_num FROM street_cafes
+                            WHERE postcode = '#{self.postcode}'
+                            ORDER BY chairs_num DESC LIMIT 1;").first.chairs_num
+  end
+
 end
